@@ -10,9 +10,9 @@ namespace git_statx
         static void Main(string[] args)
         {
             Console.Write("Enter the repo path: ");
-            string path = Console.ReadLine();
+            string path = Console.ReadLine().Trim();
             Console.Write("Enter the log path: ");
-            string logpath = Console.ReadLine();
+            string logpath = Console.ReadLine().Trim();
             GetData(path, logpath);
         }
 
