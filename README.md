@@ -12,4 +12,6 @@ Generates a CSV which looks like:
 
 This application uses [libgit2](http://libgit2.github.com/) via [LibGit2Sharp](https://github.com/libgit2/libgit2sharp).
 
-Note: the performance of this application is significantly worse than `git log --numstat`. A future iteration may switch to capturing console output, rather than using libgit2. 
+The performance of this application is significantly worse than `git log --numstat`. A future iteration may switch to capturing console output, rather than using libgit2. 
+
+This uses .NET Framework, not .NET Core, so will not work on non-Windows operating systems. However, it can be easily ported to .NET core.
