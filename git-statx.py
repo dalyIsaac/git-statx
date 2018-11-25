@@ -7,14 +7,18 @@ from datetime import datetime
 def main():
     print("Current working directory: " + os.getcwd())
     # log_path = input("Enter the log path: ")
-    log_path = "/mnt/c/Users/isaac/Source/Repos/log.csv"
+    log_path = "c:/Users/isaac/Source/Repos/log.csv"
     length = diff_month(last_commit_date(), first_commit_date()) + 1
+    stats = {}
+    get_git_log(log_path, length, stats)
 
 
-def get_git_log(log_path):
+def get_git_log(log_path, length, stats):
     with open(log_path, "w", encoding="utf-8") as file:
         proc = Popen(
-            ["git", "log", "--pretty=format:%cd", "--numstat"], stdout=PIPE, stderr=PIPE
+            ["git", "log", "--pretty=format:[%cd]", "--numstat"],
+            stdout=PIPE,
+            stderr=PIPE,
         )
         while True:
             line = proc.stdout.readline()
