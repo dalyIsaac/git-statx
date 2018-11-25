@@ -1,10 +1,4 @@
-﻿# git-file-diff-month
-
-Usage:
-
-``` shell
-./git-file-diff-month [repo-path] [log-file-path]
-```
+﻿# git-statx
 
 Generates a CSV which looks like:
 
