@@ -13,7 +13,7 @@ DATETIME_FORMAT = "%c %z"
 def main():
     start = time.time()
     print("Current working directory: " + os.getcwd())
-    log_path = input("Enter the log path: ")
+    log_path = input("Enter the log path: ").strip()
 
     with open(log_path) as file:
         pass
@@ -40,7 +40,7 @@ def main():
         lines_deleted,
         num_commits,
     )
-    print("\nTime taken: {0:.2f} seconds".format(end - start), end="\n\n")
+    print("\nTime taken: {0:.2f} seconds\n".format(end - start))
 
 
 def get_git_log(length, lines_added, lines_deleted, num_commits):
@@ -57,7 +57,7 @@ def get_git_log(length, lines_added, lines_deleted, num_commits):
         line_b = proc.stdout.readline()
 
         if not line_b and date:
-            print("{} {}".format(date.year, month_abbr[date.month]))
+            print("{}-{}".format(month_abbr[date.month], date.year))
             return
         elif not line_b:
             return

@@ -10,8 +10,8 @@
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
-      "cwd": "../vscode"
-      // "cwd": "../onenote-markdown-old/onenote-markdown"
+      // "cwd": "../vscode"
+      "cwd": "../onenote-markdown-old/onenote-markdown"
     },
     {
       "name": "Python: Attach",
