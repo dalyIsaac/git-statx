@@ -10,8 +10,31 @@ Generates a CSV which looks like:
 | src/Program.cs | lines added    | 102           | 23         | 56         | 123 |
 | ...            | ...            | ...           | ...        | ...        | ... |
 
-This application uses [libgit2](http://libgit2.github.com/) via [LibGit2Sharp](https://github.com/libgit2/libgit2sharp).
+## Requirements
 
-The performance of this application is significantly worse than `git log --numstat`. A future iteration may switch to capturing console output, rather than using libgit2. 
+* [Python 3](https://www.python.org/) (tested on Python 3.7)
+* [git](https://git-scm.com/)
 
-This uses .NET Framework, not .NET Core, so will not work on non-Windows operating systems. However, it can be easily ported to .NET core.
+## Usage
+
+### Windows 
+
+Assumes that Python 3 is on the PATH.
+
+``` shell
+python git-statx.py
+```
+
+### Linux
+
+``` shell
+python3 git-statx.py
+```
+
+To make an executable:
+
+1. Type the following to make `git-statx.py` executable
+   ``` shell
+   chmod +x git-statx.py
+   ```
+2. Move `git-statx.py` to your `bin` directory, and it will be runnable from anywhere as `git-statx.py`
