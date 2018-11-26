@@ -42,7 +42,7 @@ git clone https://github.com/dalyIsaac/git-statx.git
 
 ### Windows
 
-Assumes that Python 3 is on the PATH.
+Assuming that Python 3 is on the PATH:
 
 ``` shell
 python git-statx.py
@@ -61,7 +61,7 @@ To make an executable:
 #### Python 2
 
 ``` shell
-python2 git-statx.py
+python git-statx.py
 ```
 
 #### Python 3
