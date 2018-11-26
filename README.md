@@ -14,8 +14,16 @@ Generates a CSV which looks like:
 
 ## Requirements
 
-* [Python 3](https://www.python.org/) (tested on Python 3.7)
+* [Python](https://www.python.org/) (tested on Python 3.7.1 and 2.7.15)
 * [git](https://git-scm.com/)
+
+This program assumes that your computer uses a locale which uses the datetime format of en_US:
+
+For example,
+
+``` shell
+Tue Aug 16 21:30:00 1988
+```
 
 ## Usage
 
@@ -29,10 +37,6 @@ python git-statx.py
 
 ### Linux
 
-``` shell
-python3 git-statx.py
-```
-
 To make an executable:
 
 1. Type the following to make `git-statx.py` executable
@@ -40,3 +44,16 @@ To make an executable:
    chmod +x git-statx.py
    ```
 2. Move `git-statx.py` to your `bin` directory, and it will be runnable from anywhere as `git-statx.py`
+
+#### Python 2
+
+``` shell
+python2 git-statx.py
+```
+
+#### Python 3
+
+
+``` shell
+python3 git-statx.py
+```
