@@ -2,13 +2,15 @@
 
 Generates a CSV which looks like:
 
-| File           | Statistic      | 2018 February | 2018 March | 2018 April | ... |
-| -------------- | -------------- | ------------- | ---------- | ---------- | --- |
-| .gitignore     | lines added    | 29            | 0          | 0          | 2   |
-| .gitignore     | lines deleted  | 6             | 0          | 0          | 0   |
-| .gitignore     | number commits | 3             | 0          | 0          | 1   |
-| src/Program.cs | lines added    | 102           | 23         | 56         | 123 |
-| ...            | ...            | ...           | ...        | ...        | ... |
+| File                | Statistic      | File extension | 2018 February | 2018 March | 2018 April | ... | Dir1 | Dir2   | ... |
+| ------------------- | -------------- | -------------- | ------------- | ---------- | ---------- | --- | ---- | ------ | --- |
+| .gitignore          | lines added    | gitignore      | 29            | 0          | 0          | 2   |      |        |     |
+| .gitignore          | lines deleted  | gitignore      | 6             | 0          | 0          | 0   |      |        |     |
+| .gitignore          | number commits | gitignore      | 3             | 0          | 0          | 1   |      |        |     |
+| src/Program.cs      | lines added    | cs             | 102           | 23         | 56         | 123 | src  |        |     |
+| ...                 | ...            | ...            | ...           | ...        | ...        | ... |      |        |     |
+| ...                 | ...            | ...            | ...           | ...        | ...        | ... |      |        |     |
+| src/Thingy/class.cs | ...            | cs             | ...           | ...        | ...        | ... | src  | Thingy |     |
 
 ## Requirements
 
@@ -17,7 +19,7 @@ Generates a CSV which looks like:
 
 ## Usage
 
-### Windows 
+### Windows
 
 Assumes that Python 3 is on the PATH.
 

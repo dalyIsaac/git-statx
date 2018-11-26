@@ -3,6 +3,7 @@ import os
 from subprocess import Popen, PIPE
 from datetime import datetime, timedelta
 from calendar import month_abbr
+import calendar
 import time
 import csv
 
@@ -28,7 +29,7 @@ def main():
     lines_deleted = {}
     num_commits = {}
 
-    get_git_log(length, lines_added, lines_deleted, num_commits)
+    max_dir_depth = get_git_log(length, lines_added, lines_deleted, num_commits)
     end = time.time()
 
     print("\nWriting to " + log_path)
@@ -39,6 +40,7 @@ def main():
         lines_added,
         lines_deleted,
         num_commits,
+        max_dir_depth,
     )
     print("\nTime taken: {0:.2f} seconds\n".format(end - start))
 
@@ -52,15 +54,16 @@ def get_git_log(length, lines_added, lines_deleted, num_commits):
     counter = 0
     date = None
     prev_date = None
+    max_dir_depth = 0
 
     while True:
         line_b = proc.stdout.readline()
 
         if not line_b and date:
             print("{}-{}".format(month_abbr[date.month], date.year))
-            return
+            return max_dir_depth
         elif not line_b:
-            return
+            return max_dir_depth
 
         line = line_b.decode("utf-8").strip()
 
@@ -83,6 +86,9 @@ def get_git_log(length, lines_added, lines_deleted, num_commits):
                 lines_added[filename] = [0] * length
                 lines_deleted[filename] = [0] * length
                 num_commits[filename] = [0] * length
+                dir_depth = len(filename.split("/"))
+                if dir_depth > max_dir_depth:
+                    max_dir_depth = dir_depth
 
             lines_added[filename][counter] += (
                 int(added_str) if added_str.isdigit() else 1
@@ -124,24 +130,43 @@ def write_to_csv(
     lines_added,
     lines_deleted,
     num_commits,
+    max_dir_depth,
 ):
     with open(log_path, "w", encoding="utf-8", newline="") as file:
         filewriter = csv.writer(file, dialect="excel")
 
-        header = ["File", "Statistic"]
-        while first_commit_date <= last_commit_date:
+        header = ["File", "Statistic", "File extension"]
+        date = first_commit_date
+        while date <= last_commit_date:
             header.append(
                 "{}-{}".format(
-                    month_abbr[first_commit_date.month], first_commit_date.year
+                    month_abbr[date.month], date.year
                 )
             )
-            first_commit_date = first_commit_date + timedelta(weeks=4)
+            date = add_months(date, 1)
+        header += ["Dir{}".format(i) for i in range(max_dir_depth - 1)]
         filewriter.writerow(header)
 
         for key in lines_added.keys():
-            filewriter.writerow([key, "lines added"] + lines_added[key])
-            filewriter.writerow([key, "lines deleted"] + lines_deleted[key])
-            filewriter.writerow([key, "number commits"] + num_commits[key])
+            dirs = key.split("/")[:-1]
+            file_ext = key.split(".")[-1]
+            filewriter.writerow(
+                [key, "lines added", file_ext] + lines_added[key] + dirs
+            )
+            filewriter.writerow(
+                [key, "lines deleted", file_ext] + lines_deleted[key] + dirs
+            )
+            filewriter.writerow(
+                [key, "number commits", file_ext] + num_commits[key] + dirs
+            )
+
+
+def add_months(sourcedate, months):
+    month = sourcedate.month - 1 + months
+    year = sourcedate.year + month // 12
+    month = month % 12 + 1
+    day = min(sourcedate.day, calendar.monthrange(year, month)[1])
+    return datetime(year, month, day)
 
 
 if __name__ == "__main__":
