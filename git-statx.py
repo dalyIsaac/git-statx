@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import os
 import sys
 from subprocess import Popen, PIPE
 from datetime import datetime, timedelta
@@ -17,7 +16,6 @@ except Exception:
 
 def main():
     start = time.time()
-    print("Current working directory: " + os.getcwd())
     log_path = input("Enter the log path: ").strip()
 
     with open(log_path, "w") as file:
@@ -142,11 +140,11 @@ def write_to_csv(
     if sys.version_info[0] < 3:
         log_file = open(log_path, "wb")
     else:
-        log_file = open(log_path, "w")
+        log_file = open(log_path, "w", newline="")
 
     filewriter = csv.writer(log_file, dialect="excel")
 
-    header = ["File", "Statistic", "File extension"]
+    header = ["File name", "File extension", "Statistic"]
     date = first_commit_date
     while date <= last_commit_date:
         header.append("{}-{}".format(month_abbr[date.month], date.year))
@@ -155,13 +153,15 @@ def write_to_csv(
     filewriter.writerow(header)
 
     for key in lines_added.keys():
-        dirs = key.split("/")[:-1]
+        path = key.split("/")
+        dirs = path[:-1]
         file_ext = key.split(".")[-1]
-        filewriter.writerow([key, "lines added", file_ext] + lines_added[key] + dirs)
+        file_name = "".join(path[-1].split(".")[:-1])
+        filewriter.writerow([file_name, file_ext, "lines added"] + lines_added[key] + dirs)
         filewriter.writerow(
-            [key, "lines deleted", file_ext] + lines_deleted[key] + dirs
+            [file_name, file_ext, "lines deleted"] + lines_deleted[key] + dirs
         )
-        filewriter.writerow([key, "number commits", file_ext] + num_commits[key] + dirs)
+        filewriter.writerow([file_name, file_ext, "number commits"] + num_commits[key] + dirs)
 
     log_file.close()
 

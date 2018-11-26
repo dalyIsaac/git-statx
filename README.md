@@ -2,15 +2,22 @@
 
 Generates a CSV which looks like:
 
-| File                | Statistic      | File extension | 2018 February | 2018 March | 2018 April | ... | Dir1 | Dir2   | ... |
-| ------------------- | -------------- | -------------- | ------------- | ---------- | ---------- | --- | ---- | ------ | --- |
-| .gitignore          | lines added    | gitignore      | 29            | 0          | 0          | 2   |      |        |     |
-| .gitignore          | lines deleted  | gitignore      | 6             | 0          | 0          | 0   |      |        |     |
-| .gitignore          | number commits | gitignore      | 3             | 0          | 0          | 1   |      |        |     |
-| src/Program.cs      | lines added    | cs             | 102           | 23         | 56         | 123 | src  |        |     |
-| ...                 | ...            | ...            | ...           | ...        | ...        | ... |      |        |     |
-| ...                 | ...            | ...            | ...           | ...        | ...        | ... |      |        |     |
-| src/Thingy/class.cs | ...            | cs             | ...           | ...        | ...        | ... | src  | Thingy |     |
+| File name | File extension | Statistic      | 2018 February | 2018 March | 2018 April | ... | Dir1 | Dir2      | Dir 3  | ... |
+| --------- | -------------- | -------------- | ------------- | ---------- | ---------- | --- | ---- | --------- | ------ | --- |
+| main      | py             | lines added    | 29            | 0          | 2          | ... | src  |           |        | ... |
+| main      | py             | lines deleted  | 6             | 0          | 0          | ... | src  |           |        | ... |
+| main      | py             | number commits | 3             | 0          | 1          | ... | src  |           |        | ... |
+| filename  | py             | lines added    | ...           | ...        | ...        | ... | src  | directory | thingy | ... |
+| ...       | ...            | ...            | ...           | ...        | ...        | ... |      |           |        | ... |
+| ...       | ...            | ...            | ...           | ...        | ...        | ... |      |           |        | ... |
+
+The last file shown above would have the path `src/directory/thingy/filename.py`.
+
+The CSV file retrieves data from:
+
+``` shell
+git log --numstat
+```
 
 ## Requirements
 
@@ -27,6 +34,12 @@ Tue Aug 16 21:30:00 1988
 
 ## Usage
 
+To download the repository, ensure git is installed, then in the desired directory:
+
+``` shell
+git clone https://github.com/dalyIsaac/git-statx.git
+```
+
 ### Windows
 
 Assumes that Python 3 is on the PATH.
@@ -39,7 +52,7 @@ python git-statx.py
 
 To make an executable:
 
-1. Type the following to make `git-statx.py` executable
+1. Type the following to make `git-statx.py` executable:
    ``` shell
    chmod +x git-statx.py
    ```
@@ -57,3 +70,7 @@ python2 git-statx.py
 ``` shell
 python3 git-statx.py
 ```
+
+## Performance
+
+The [Visual Studio Code](https://github.com/microsoft/vscode) repository on 26 November 2018 had around 42,700 commits over about 36 months. `git-statx` ran in about 55 seconds.
